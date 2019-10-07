@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title text-center>
+      <p class="title">List Items</p>
+    </ion-title>
+    <div class="button">
+      <ion-fab vertical="top" horizontal="end" slot="fixed">
+              <ion-fab-button color="danger" (click)="addItem()">
+                <ion-icon name="add"></ion-icon>
+              </ion-fab-button>
+      </ion-fab>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  Welcome to the members only area!
+
+  <ion-list>
+    <ion-item *ngFor="let item of items">{{item.title}}</ion-item>
+  </ion-list>
+
+  <p>{{ data }}</p>
+
+  <ion-button expand="full" (click)="loadSpecialInfo()">Load Special Info</ion-button>
+  <ion-button expand="full" (click)="logout()">Logout</ion-button>
+
+</ion-content>
