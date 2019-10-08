@@ -22,13 +22,4 @@ export class AddItemPage implements OnInit {
     this.route.navigate(['/inside'],{queryParams: this.todo});
   }
 
-/*  saveItem() {
-
-    let newItem = {
-      title: this.title,
-      description: this.description
-    };
-
-  }*/
-
 }
