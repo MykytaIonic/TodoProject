@@ -33,6 +33,21 @@ export class InsidePage implements OnInit {
     this.route.navigate(['/add-item']);
   }
 
+  removeItem(item) {
+    for(let i = 0; i < this.items.length; i++) {
+
+     if(this.items[i] == item){
+       this.items.splice(i, 1);
+     }
+
+   }
+
+  }
+
+  edit() {
+      this.route.navigate(['/item-details'],{queryParams: this.items});
+  }
+
   loadSpecialInfo() {
     this.authService.getSpecialData().subscribe(res => {
       this.data = res['msg'];

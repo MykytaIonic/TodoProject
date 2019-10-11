@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Storage, IonicStorageModule } from '@ionic/storage';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
+import { Facebook } from '@ionic-native/facebook/ngx';
+
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
@@ -39,7 +41,8 @@ export function jwtOptionsFactory(storage) {
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Facebook
   ],
   bootstrap: [AppComponent]
 })

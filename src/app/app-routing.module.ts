@@ -11,6 +11,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   { path: 'add-item', loadChildren: './pages/add-item/add-item.module#AddItemPageModule' },
+  { path: 'item-details', loadChildren: './pages/item-details/item-details.module#ItemDetailsPageModule' },
 ];
 
 @NgModule({

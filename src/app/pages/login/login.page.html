@@ -26,6 +26,27 @@
     </ion-text>
 
     <ion-button expand="block" type="button" color="danger" (click)="register()" [disabled]="!credentialsForm.valid">Register</ion-button>
-    <ion-button expand="block" type="button" color="danger" (click)="googleSignIn()" >RegisterGoogle</ion-button>
+    <ion-button expand="block" type="button" (click)="googleSignIn()" >Register Google</ion-button>
   </form>
+
+  <div *ngIf="isLoggedIn; else facebookLogin">
+   <h2>Hi, {{users.name}} ({{users.email}})</h2>
+   <p>
+     Gender: {{users.gender}}
+   </p>
+   <p>
+     <img src="{{users.picture.data.url}}" width="100" alt="{{users.name}}" />
+   </p>
+   <p>
+     <button ion-button icon-right (click)="logout()">
+       Logout
+     </button>
+   </p>
+ </div>
+ <ng-template #facebookLogin>
+   <ion-button expand="block" ion-button icon-right (click)="login()">
+     Login with
+     <ion-icon name="logo-facebook"></ion-icon>
+   </ion-button>
+ </ng-template>
 </ion-content>

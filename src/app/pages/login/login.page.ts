@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 declare var gapi: any;
 
 @Component({
@@ -11,12 +12,24 @@ declare var gapi: any;
 export class LoginPage implements OnInit {
 
   credentialsForm: FormGroup;
+  isLoggedIn = false;
+  users: any;
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private fb: Facebook
   ) {
-
+    fb.getLoginStatus()
+    .then(res => {
+      console.log(res.status);
+      if(res.status === "connect") {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    })
+    .catch(e => console.log(e));
   }
 
   ngOnInit() {
@@ -36,6 +49,7 @@ export class LoginPage implements OnInit {
       this.authService.login(this.credentialsForm.value).subscribe();
     });
   }
+
   googleSignIn() {
     gapi.load('auth2', function() {
     const auth2 = gapi.auth2.init({
@@ -56,5 +70,37 @@ export class LoginPage implements OnInit {
     });
   });
 	}
+
+ //Login Facebook
+  login() {
+  this.fb.login(['public_profile', 'email'])
+    .then(res => {
+      if(res.status === "connected") {
+        this.isLoggedIn = true;
+        this.getUserDetail(res.authResponse.userID);
+      } else {
+        this.isLoggedIn = false;
+      }
+    })
+    .catch(e => console.log('Error logging into Facebook', e));
+}
+
+//Logout Facebook
+  logout() {
+    this.fb.logout()
+      .then( res => this.isLoggedIn = false)
+      .catch(e => console.log('Error logout from Facebook', e));
+  }
+
+  getUserDetail(userid) {
+  this.fb.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
+    .then(res => {
+      console.log(res);
+      this.users = res;
+    })
+    .catch(e => {
+      console.log(e);
+    });
+}
 
 }
